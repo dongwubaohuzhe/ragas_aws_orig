@@ -1,0 +1,7 @@
+boto3
+datasets
+langchain
+ragas
+pydantic==2.7.0
+streamlit
+pandas
