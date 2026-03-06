@@ -1,7 +1,9 @@
 boto3
 datasets
 langchain
+langchain-community
 ragas
-pydantic==2.7.0
+pydantic>=2.7.4
+requests
 streamlit
 pandas
