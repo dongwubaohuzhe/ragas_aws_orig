@@ -20,8 +20,9 @@ class StreamlitUI:
         model_id = st.sidebar.selectbox(
             "LLM Model",
             [
-                "anthropic.claude-3-5-sonnet-20240620-v1:0",
+                "anthropic.claude-sonnet-4-5-20250929-v1:0",
                 "anthropic.claude-3-7-sonnet-20250219-v1:0",
+                "anthropic.claude-3-5-sonnet-20240620-v1:0",
                 "amazon.nova-pro-v1:0",
                 "amazon.titan-text-express-v1",
             ]
