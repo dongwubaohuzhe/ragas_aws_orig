@@ -8,31 +8,31 @@ of the underlying model provider.
 SUPPORTED_MODELS = {
     "anthropic.claude-3-sonnet-20240229-v1:0": {
         "temperature": 0.1,
-        "max_tokens": 1000,
+        "max_tokens": 4096,
     },
     "anthropic.claude-3-haiku-20240307-v1:0": {
         "temperature": 0.1,
-        "max_tokens": 1000,
+        "max_tokens": 4096,
     },
     "anthropic.claude-3-5-sonnet-20240620-v1:0": {
         "temperature": 0.1,
-        "max_tokens": 1000,
+        "max_tokens": 4096,
     },
     "anthropic.claude-3-7-sonnet-20250219-v1:0": {
         "temperature": 0.1,
-        "max_tokens": 1000,
+        "max_tokens": 4096,
     },
     "amazon.titan-text-express-v1": {
         "temperature": 0.1,
-        "max_tokens": 1000,
+        "max_tokens": 4096,
     },
     "amazon.titan-text-lite-v1": {
         "temperature": 0.1,
-        "max_tokens": 1000,
+        "max_tokens": 4096,
     },
     "amazon.nova-pro-v1:0": {
         "temperature": 0.1,
-        "max_tokens": 1000,
+        "max_tokens": 4096,
     },
 }
 
@@ -45,4 +45,4 @@ SUPPORTED_EMBEDDINGS = [
 
 def get_model_config(model_id):
     """Get configuration for a specific model"""
-    return SUPPORTED_MODELS.get(model_id, {"temperature": 0.1, "max_tokens": 1000})
+    return SUPPORTED_MODELS.get(model_id, {"temperature": 0.1, "max_tokens": 4096})

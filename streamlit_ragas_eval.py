@@ -1,16 +1,19 @@
 import streamlit as st
 import pandas as pd
 import requests
+import urllib3
 from datetime import datetime
 from datasets import Dataset
 from typing import List, Dict, Any
 from langchain_aws import ChatBedrockConverse, BedrockEmbeddings
 from ragas import evaluate
-from ragas.metrics import faithfulness, context_recall, context_precision, answer_relevancy
+from ragas.metrics.collections import faithfulness, context_recall, context_precision, answer_relevancy
 from model_config import get_model_config
 import io
 import time
 import random
+
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 class Document:
     def __init__(self, page_content: str, metadata: Dict[str, Any] = None):
