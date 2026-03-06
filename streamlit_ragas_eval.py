@@ -9,6 +9,7 @@ from datasets import Dataset
 from typing import List, Dict, Any
 from langchain_aws import ChatBedrockConverse, BedrockEmbeddings
 from ragas import evaluate
+from ragas.run_config import RunConfig
 import warnings
 with warnings.catch_warnings():
     warnings.simplefilter("ignore", DeprecationWarning)
@@ -274,14 +275,17 @@ def run_ragas_evaluation(test_data, api_url, bearer_token, tenant, knowledge_bas
         model_id=embedding_model_id,
     )
    
-    # Run evaluation with retry logic
+    # Run evaluation with retry logic. Use higher timeout (360s) and lower concurrency
+    # so Bedrock is not overwhelmed; context_precision often times out at default 180s.
+    run_config = RunConfig(timeout=360, max_workers=8)
     for attempt in range(3):
         try:
             result = evaluate(
                 dataset,
                 metrics=[faithfulness, context_recall, context_precision, answer_relevancy],
                 llm=bedrock_model,
-                embeddings=bedrock_embeddings
+                embeddings=bedrock_embeddings,
+                run_config=run_config,
             )
             break
         except Exception as e:
