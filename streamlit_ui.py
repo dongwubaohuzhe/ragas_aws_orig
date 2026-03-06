@@ -50,7 +50,15 @@ class StreamlitUI:
                 if 'question' not in df.columns or 'ground_truth' not in df.columns:
                     st.error("CSV must contain 'question' and 'ground_truth' columns")
                     return None
-               
+
+                before = len(df)
+                df = df.dropna(subset=['question', 'ground_truth'])
+                df['question'] = df['question'].astype(str).str.strip()
+                df['ground_truth'] = df['ground_truth'].astype(str).str.strip()
+                df = df[df['question'].str.len() > 0]
+                if len(df) < before:
+                    st.warning(f"Dropped {before - len(df)} rows with empty question/ground_truth")
+
                 return df.to_dict('records')
             except Exception as e:
                 st.error(f"Error reading CSV file: {e}")

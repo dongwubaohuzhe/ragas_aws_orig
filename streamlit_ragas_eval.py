@@ -207,10 +207,15 @@ def run_ragas_evaluation(test_data, api_url, bearer_token, tenant, knowledge_bas
     progress_bar = st.progress(0)
    
     for i, item in enumerate(test_data):
-        question = item['question']
-        ground_truth = item['ground_truth']
-       
-        # Get documents from retriever
+        question = str(item['question']).strip()
+        ground_truth = str(item['ground_truth']).strip()
+
+        if not question or question == 'nan':
+            continue
+
+        if not ground_truth or ground_truth == 'nan':
+            ground_truth = "No ground truth provided."
+
         documents = retriever.get_relevant_documents(question)
         context_list = [doc.page_content for doc in documents if doc.page_content and doc.page_content.strip()]
        
