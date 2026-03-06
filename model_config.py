@@ -22,7 +22,7 @@ SUPPORTED_MODELS = {
         "temperature": 0.1,
         "max_tokens": 4096,
     },
-    "anthropic.claude-sonnet-4-5-20250929-v1:0": {
+    "us-gov.anthropic.claude-sonnet-4-5-20250929-v1:0": {
         "temperature": 0.1,
         "max_tokens": 4096,
     },
