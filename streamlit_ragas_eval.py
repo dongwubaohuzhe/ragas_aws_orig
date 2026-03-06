@@ -1,5 +1,7 @@
 import streamlit as st
 import pandas as pd
+import json
+import math
 import requests
 import urllib3
 from datetime import datetime
@@ -46,7 +48,7 @@ class SimpleAPIRetriever:
             try:
                 response = requests.post(self.api_url, json=payload, headers=self.headers, verify=False, timeout=30)
                 response.raise_for_status()
-                result = response.json()
+                result = json.loads(response.text, parse_constant=lambda c: None)
                
                 documents = []
                

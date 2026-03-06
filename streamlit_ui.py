@@ -43,7 +43,7 @@ class StreamlitUI:
        
         if uploaded_file is not None:
             try:
-                df = pd.read_csv(uploaded_file)
+                df = pd.read_csv(uploaded_file, keep_default_na=False)
                 st.success(f"Loaded {len(df)} questions from test plan")
                 st.dataframe(df.head())
                
@@ -51,13 +51,12 @@ class StreamlitUI:
                     st.error("CSV must contain 'question' and 'ground_truth' columns")
                     return None
 
-                before = len(df)
-                df = df.dropna(subset=['question', 'ground_truth'])
                 df['question'] = df['question'].astype(str).str.strip()
                 df['ground_truth'] = df['ground_truth'].astype(str).str.strip()
+                before = len(df)
                 df = df[df['question'].str.len() > 0]
                 if len(df) < before:
-                    st.warning(f"Dropped {before - len(df)} rows with empty question/ground_truth")
+                    st.warning(f"Dropped {before - len(df)} rows with empty questions")
 
                 return df.to_dict('records')
             except Exception as e:
