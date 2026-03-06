@@ -1,6 +1,7 @@
 boto3
 datasets
 langchain
+langchain-aws
 langchain-community
 ragas
 pydantic>=2.7.4

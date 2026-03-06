@@ -4,8 +4,7 @@ import requests
 from datetime import datetime
 from datasets import Dataset
 from typing import List, Dict, Any
-from langchain_community.chat_models import BedrockChat
-from langchain_community.embeddings import BedrockEmbeddings
+from langchain_aws import ChatBedrockConverse, BedrockEmbeddings
 from ragas import evaluate
 from ragas.metrics import faithfulness, context_recall, context_precision, answer_relevancy
 from model_config import get_model_config
@@ -213,14 +212,14 @@ def run_ragas_evaluation(test_data, api_url, bearer_token, tenant, knowledge_bas
         if not context_list:
             context_list = ["No relevant context found for this question."]
        
-        # Initialize LLM for answer generation
         try:
-            llm_model = BedrockChat(
+            llm_model = ChatBedrockConverse(
                 region_name="us-gov-west-1",
-                model_id=model_id,
-                model_kwargs={"temperature": 0.1, "max_tokens": 200}
+                model=model_id,
+                temperature=0.1,
+                max_tokens=200,
             )
-        except:
+        except Exception:
             llm_model = None
        
         # Generate answer from contexts using LLM
@@ -248,26 +247,18 @@ def run_ragas_evaluation(test_data, api_url, bearer_token, tenant, knowledge_bas
         'ground_truth': ground_truths
     })
    
-    # Get model configuration
-    model_config = get_model_config(model_id)
+    model_cfg = get_model_config(model_id)
 
-    # Initialize models
-    #bedrock_model = BedrockChat(
-    #    region_name="us-gov-west-1",
-    #    model_id=model_id,
-    #    model_kwargs={"temperature": 0.1, "max_tokens": 512}
-    #)
-
-    bedrock_model = BedrockChat(
+    bedrock_model = ChatBedrockConverse(
         region_name="us-gov-west-1",
-        model_id=model_id,
-        model_kwargs=model_config["kwargs"]
+        model=model_id,
+        temperature=model_cfg["temperature"],
+        max_tokens=model_cfg["max_tokens"],
     )
-   
-   
+
     bedrock_embeddings = BedrockEmbeddings(
         region_name="us-gov-west-1",
-        model_id=embedding_model_id
+        model_id=embedding_model_id,
     )
    
     # Run evaluation with retry logic
