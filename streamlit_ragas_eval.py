@@ -7,7 +7,10 @@ from datasets import Dataset
 from typing import List, Dict, Any
 from langchain_aws import ChatBedrockConverse, BedrockEmbeddings
 from ragas import evaluate
-from ragas.metrics.collections import faithfulness, context_recall, context_precision, answer_relevancy
+import warnings
+with warnings.catch_warnings():
+    warnings.simplefilter("ignore", DeprecationWarning)
+    from ragas.metrics import faithfulness, context_recall, context_precision, answer_relevancy
 from model_config import get_model_config
 import io
 import time
